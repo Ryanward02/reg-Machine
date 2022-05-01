@@ -33,6 +33,20 @@ def insToString(label, instr):
     else:
         print("L" + str(label) + ": HALT")
 
+def insToGodel(instr):
+    isMinus = isinstance(instr, Minus)
+    isPlus = isinstance(instr, Plus)
+
+    if isMinus:
+        x = (instr.reg * 2) + 1
+        j = instr.instr1
+        k = instr.instr2
+
+        y = ((2 ** j) * ((2 * k) + 1)) - 1
+        
+        return (2 ** x) * ((2 * y) + 1)
+
+
 def numToInstr(n: int):
     binRep = str(bin(n))[2:]
     x = 0
@@ -47,6 +61,20 @@ def numToInstr(n: int):
             
         
     print("<<" + str(x) + ", " + str(int("0b" + binRep, base=2)) + ">>")
+
+def godelToList(n: int):
+    binRep = str(bin(n))[2:][::-1]
+    x = 0
+    out = []
+    
+    for i in range(0, len(binRep)):
+        if binRep[i] == "1":
+            out.append(x)
+            x = 0
+        else:
+            x += 1
+        
+    return out
 
 class Halt:
     global regs
@@ -85,6 +113,8 @@ class Minus:
             regs[self.reg] -= 1
             curIns = self.instr1
 
+
+
 pExample = Program([0, 3, 0], [Minus(0, 1, 2), Plus(1, 0), Halt()])
 
 p = Program([0, 0, 7], [Minus(1, 2, 1), Halt(), Minus(1, 3, 4), Minus(1, 5, 4), Halt(), Plus(0, 0)])
@@ -94,3 +124,7 @@ for i in p.instrList:
     insToString(p.instrList.index(i), i)
 
 p.execute()
+
+
+print("godel list: ", godelToList(5426))
+
