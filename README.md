@@ -9,7 +9,9 @@ The syntax for the register machine is as follows:
 
 ## Example instructions
 > Minus(input-register, instruction-1-non-zero, instruction-2-if-zero)
+
 > Plus(input-register, next-instruction)
+
 > Halt(no-parameters)
 
 In the program i have 2 examples. change variable p to your chosen program, with the instructions in order i.e program = Program([0, R0, R1, ...], [L0, L1, L2, ...])
